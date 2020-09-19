@@ -1,0 +1,10 @@
+[
+    [{"type":0 },{"name":"ICMP Internal IP" }, {"url": "192.168.0.1" },{"res":"" }],
+    [{"type":0 },{"name":"ICMP Server" },{"url": "www.baidu.com" },{"res":"" }],
+    [{"type":1 },{"name":"HTTP Yahoo" },       {"url": "https://www.yahoo.com" },{"res":"" }],
+    [{"type":1 },{"name":"google.com" },  {"url": "https://www.google.com" },{"res":"" }],
+    [{"type":1 },{"name":"HTTP Server" },{"url": "https://www.baidu.com" },{"res":"" }],
+    [{"type":1 },{"name":"HTTP amazon.com" },  {"url": "https://www.amazon.com" },{"res":"" }],
+    [{"type":1 },{"name":"HTTPS nyt.com" },    {"url": "https://www.nyt.com" },{"res":"" }],
+    [{"type":1 },{"name":"HTTPS nytimes.com" },{"url": "https://www.nytimes.com" },{"res":"" }]
+]
