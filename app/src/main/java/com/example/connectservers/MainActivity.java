@@ -66,18 +66,40 @@ public class MainActivity extends AppCompatActivity {
                 DataConnectionImageView.setImageResource(R.drawable.presence_online);
                 wifiBroadCastRecieverExtView.setText("Connected");
                 wifiBroadCastRecieverExtView.setTextColor(Color.parseColor(colors[0]));
+                ConnectionTypeTextView.setText("WIFI");
+                ConnectionTypeTextView.setTextColor(Color.parseColor(colors[0]));
+                ConnectionTextView.setText("CONNECTED");
+                ConnectionTextView.setTextColor(Color.parseColor(colors[0]));  // red
+
+                AvailableStatusTypeTextView.setText("AVAILABLE");
+                AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[0]));  // red
             }
             else if(supplicantState.equals(SupplicantState.SCANNING)){
                 Toast.makeText(MainActivity.this,"scanning",Toast.LENGTH_SHORT).show();
                 DataConnectionImageView.setImageResource(R.drawable.presence_busy);
                 wifiBroadCastRecieverExtView.setText("Scanning");
                 wifiBroadCastRecieverExtView.setTextColor(Color.parseColor(colors[1]));
+                ConnectionTypeTextView.setText("UNKNOWN");
+                ConnectionTypeTextView.setTextColor(Color.parseColor(colors[1]));
+                ConnectionTextView.setText("NOT CONNECTED");
+                ConnectionTextView.setTextColor(Color.parseColor(colors[1]));  // red
+
+                AvailableStatusTypeTextView.setText("UNAVAILABLE");
+                AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[1]));  // red
             }
             else{
                 Toast.makeText(MainActivity.this,"no wifi",Toast.LENGTH_SHORT).show();
                 DataConnectionImageView.setImageResource(R.drawable.presence_invisible);
                 wifiBroadCastRecieverExtView.setText("no wifi");
                 wifiBroadCastRecieverExtView.setTextColor(Color.parseColor(colors[1]));
+                ConnectionTypeTextView.setText("UNKNOWN");
+                ConnectionTypeTextView.setTextColor(Color.parseColor(colors[1]));
+
+                ConnectionTextView.setText("NOT CONNECTED");
+                ConnectionTextView.setTextColor(Color.parseColor(colors[1]));  // red
+
+                AvailableStatusTypeTextView.setText("UNAVAILABLE");
+                AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[1]));  // red
             }
 
         }
@@ -146,31 +168,45 @@ public class MainActivity extends AppCompatActivity {
     public boolean getNetworkInfo() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo=connectivityManager.getActiveNetworkInfo();
-        assert networkInfo != null;
-        if(networkInfo.getTypeName().equalsIgnoreCase("WIFI")){
-            ConnectionTypeTextView.setText("WIFI");
-            ConnectionTypeTextView.setTextColor(Color.parseColor(colors[0]));
+        ConnectionTypeTextView.setText("UNKNOWN");
+        if(networkInfo!=null) {
+            if (networkInfo.getTypeName().equalsIgnoreCase("WIFI")) {
+                ConnectionTypeTextView.setText("WIFI");
+                ConnectionTypeTextView.setTextColor(Color.parseColor(colors[0]));
+            } if(networkInfo.getTypeName().equalsIgnoreCase("MOBILE")) {
+                ConnectionTypeTextView.setText("MOBILE");
+                ConnectionTypeTextView.setTextColor(Color.parseColor(colors[1]));
+            }
+            if (networkInfo.isAvailable()) {
+                AvailableStatusTypeTextView.setText("Available");
+                AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[0]));
+                if (networkInfo.isConnected()) {
+                    ConnectionTextView.setText("Connected");
+                    ConnectionTextView.setTextColor(Color.parseColor(colors[0]));
+                    return true;
+                } else {
+                    ConnectionTextView.setText("Not Connected");
+                    ConnectionTextView.setTextColor(Color.parseColor(colors[1]));
+                    return false;
+                }
+
+            } else {
+                AvailableStatusTypeTextView.setText("UnAvailable");
+                AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[1]));
+                return false;
+            }
+
+
         }
         else {
-            ConnectionTypeTextView.setText("MOBILE");
-            ConnectionTypeTextView.setTextColor(Color.parseColor(colors[1]));
-        }
-        if(networkInfo.isAvailable()){
-            AvailableStatusTypeTextView.setText("Available");
-            AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[0]));
+            ConnectionTypeTextView.setText("UNKNOWN");
 
-        }else{
-            AvailableStatusTypeTextView.setText("UnAvailable");
-            AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[1]));
-        }
-        if(networkInfo.isConnected()){
-            ConnectionTextView.setText("Connected");
-            ConnectionTextView.setTextColor(Color.parseColor(colors[0]));
-            return true;
-        }
-        else{
-            ConnectionTextView.setText("Not Connected");
-            ConnectionTextView.setTextColor(Color.parseColor(colors[1]));
+            ConnectionTextView.setText("NOT CONNECTED");
+            ConnectionTextView.setTextColor(Color.parseColor(colors[1]));  // red
+
+            AvailableStatusTypeTextView.setText("UNAVAILABLE");
+            AvailableStatusTypeTextView.setTextColor(Color.parseColor(colors[1]));  // red
+
         }
         return false;
     }
